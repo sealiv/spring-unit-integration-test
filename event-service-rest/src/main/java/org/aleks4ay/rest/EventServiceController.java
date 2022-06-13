@@ -26,7 +26,7 @@ public class EventServiceController {
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Event getEvents(@PathVariable(value = "id") int id) {
+    public Event getEvent(@PathVariable(value = "id") long id) {
         return eventService.getEvent(id);
     }
 
@@ -41,7 +41,7 @@ public class EventServiceController {
     }
 
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteEvent(@PathVariable(value = "id") int id) {
+    public void deleteEvent(@PathVariable(value = "id") long id) {
         eventService.deleteEvent(id);
     }
 
