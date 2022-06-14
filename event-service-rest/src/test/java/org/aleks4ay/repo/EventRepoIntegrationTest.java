@@ -1,12 +1,12 @@
 package org.aleks4ay.repo;
 
 import org.aleks4ay.dto.Event;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
@@ -19,8 +19,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource(properties = "application.properties")
-class EventRepoIntegrationTest {
+@DisplayName("Test for unique repository method in 'EventRepo.class'")
+public class EventRepoIntegrationTest {
 
     @Autowired
     private TestEntityManager entityManager;

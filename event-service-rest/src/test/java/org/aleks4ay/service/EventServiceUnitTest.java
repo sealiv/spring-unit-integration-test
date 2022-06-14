@@ -3,6 +3,7 @@ package org.aleks4ay.service;
 import org.aleks4ay.dto.Event;
 import org.aleks4ay.repo.EventRepo;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,7 +24,8 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-class EventServiceUnitTest {
+@DisplayName("Unit test for service 'EventService' with use Mockito.mock(EventRepo.class)")
+public class EventServiceUnitTest {
 
     private Event event;
     EventRepo mockEventRepo = mock(EventRepo.class);

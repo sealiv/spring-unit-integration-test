@@ -4,6 +4,7 @@ import org.aleks4ay.dto.Event;
 import org.aleks4ay.service.EventServiceImpl;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(EventServiceController.class)
-class EventServiceControllerUnitTest {
+@DisplayName("Unit test for controller 'EventServiceController' with use MockMvc")
+public class EventServiceControllerUnitTest {
 
     private Event event;
     @Autowired

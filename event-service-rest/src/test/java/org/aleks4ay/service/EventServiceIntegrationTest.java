@@ -2,6 +2,7 @@ package org.aleks4ay.service;
 
 import org.aleks4ay.dto.Event;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @Sql(scripts = {"classpath:initTest.sql"})
-class EventServiceIntegrationTest {
+@DisplayName("Integration test for service 'EventService' with use @Sql script 'initTest.sql' before each method")
+public class EventServiceIntegrationTest {
 
     private Event event;
 

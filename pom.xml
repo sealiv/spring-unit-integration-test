@@ -87,5 +87,12 @@
             <artifactId>json</artifactId>
             <version>20220320</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-engine</artifactId>
+            <version>1.8.2</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 </project>

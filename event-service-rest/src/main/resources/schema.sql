@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS event;
 CREATE TABLE event (
     id bigint NOT NULL auto_increment,
     title VARCHAR(255),

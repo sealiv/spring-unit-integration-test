@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = RestApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = {"classpath:initTest.sql"})
+@DisplayName("Integration test for controller 'EventServiceController' with use @Sql script 'initTest.sql'")
 public class EventServiceControllerIntegrationTest {
 
 	@Autowired
@@ -47,6 +48,7 @@ public class EventServiceControllerIntegrationTest {
 	@Test
 	public void getAllEventsTest() {
 		String response = restTemplate.getForObject(createURLWithPort("/events"), String.class);
+		assert(response != null);
 		assertTrue(response.contains("[{\"id\":1,\"title\":\"title 4\",\"place\":\"place test\",\"speaker\":\"Anatoly\""));
 	}
 
@@ -66,7 +68,7 @@ public class EventServiceControllerIntegrationTest {
 	public void createEventTest() {
 		event.setTitle("title_createEvent");
 
-		HttpEntity<Event> entity = new HttpEntity<Event>(event, null);
+		HttpEntity<Event> entity = new HttpEntity<>(event, null);
 
 		restTemplate.exchange(createURLWithPort("/events"), HttpMethod.POST, entity, String.class);
 
@@ -78,7 +80,7 @@ public class EventServiceControllerIntegrationTest {
 		event.setTitle("title_updatedEvent");
 		event.setId(3);
 
-		HttpEntity<Event> entity = new HttpEntity<Event>(event, null);
+		HttpEntity<Event> entity = new HttpEntity<>(event, null);
 
 		restTemplate.exchange(createURLWithPort("/events"), HttpMethod.PUT, entity, String.class);
 
