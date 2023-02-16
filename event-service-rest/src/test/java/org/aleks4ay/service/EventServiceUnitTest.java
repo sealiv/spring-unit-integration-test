@@ -25,7 +25,6 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @DisplayName("Unit test for service 'EventService' with use Mockito.mock(EventRepo.class)")
 public class EventServiceUnitTest {
 
