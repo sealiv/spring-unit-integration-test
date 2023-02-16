@@ -32,7 +32,7 @@ public class EventServiceIntegrationTest {
     @Test
     public void createEventTest() {
         Event eventAfterSaving = eventService.createEvent(event);
-        assertTrue(eventAfterSaving.getId() > 0);
+        assertTrue(eventAfterSaving.getId() == 4L);
     }
 
     @Test

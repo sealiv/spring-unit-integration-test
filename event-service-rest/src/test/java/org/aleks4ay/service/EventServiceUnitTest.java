@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +29,9 @@ import static org.mockito.Mockito.*;
 @DisplayName("Unit test for service 'EventService' with use Mockito.mock(EventRepo.class)")
 public class EventServiceUnitTest {
 
+    @Captor
+    ArgumentCaptor<Event> asEvent;
+
     private Event event;
     EventRepo mockEventRepo = mock(EventRepo.class);
 
@@ -42,7 +47,8 @@ public class EventServiceUnitTest {
     @Test
     public void createEventTest() {
         eventService.createEvent(event);
-        verify(mockEventRepo, times(1)).save(any(Event.class));
+        verify(mockEventRepo, times(1)).save(asEvent.capture());
+        assertThat(event, is(asEvent.getValue()));
     }
 
     @Test
@@ -55,7 +61,7 @@ public class EventServiceUnitTest {
     @Test
     public void updateEventTest() {
         eventService.createEvent(event);
-        verify(mockEventRepo, times(1)).save(any(Event.class));
+        verify(mockEventRepo, times(1)).save(event);
     }
 
 
