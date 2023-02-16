@@ -6,12 +6,10 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -24,7 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
 @WebMvcTest(EventServiceController.class)
 @DisplayName("Unit test for controller 'EventServiceController' with use MockMvc")
 public class EventServiceControllerUnitTest {
@@ -100,13 +97,12 @@ public class EventServiceControllerUnitTest {
 
 
     public static JSONObject getJson(Event event) throws Exception{
-        JSONObject obj = new JSONObject();
-        obj.put("id", event.getId());
-        obj.put("title", event.getTitle());
-        obj.put("place", event.getPlace());
-        obj.put("speaker", event.getSpeaker());
-        obj.put("eventType", event.getEventType());
-        obj.put("dateTime", event.getDateTime());
-        return obj;
+        return new JSONObject()
+                .put("id", event.getId())
+                .put("title", event.getTitle())
+                .put("place", event.getPlace())
+                .put("speaker", event.getSpeaker())
+                .put("eventType", event.getEventType())
+                .put("dateTime", event.getDateTime());
     }
 }

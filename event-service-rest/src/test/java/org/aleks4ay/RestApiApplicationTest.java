@@ -16,7 +16,7 @@ class RestApiApplicationTest {
     private EventServiceController controller;
 
     @Test
-    public void contextLoads() {
+    void contextLoads() {
         assertThat(controller).isNotNull();
     }
 }

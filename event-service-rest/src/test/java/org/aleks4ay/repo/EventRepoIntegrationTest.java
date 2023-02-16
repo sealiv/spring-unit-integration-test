@@ -4,13 +4,11 @@ import org.aleks4ay.dto.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,10 +16,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
 @DataJpaTest
 @DisplayName("Test for all repository method in 'EventRepo.class'")
-public class EventRepoIntegrationTest {
+class EventRepoIntegrationTest {
 
     private Event event;
 
@@ -38,7 +35,7 @@ public class EventRepoIntegrationTest {
     }
 
     @Test
-    public void getEventTest() {
+    void getEventTest() {
         jdbcTemplate.update("INSERT INTO event (id, title, place, speaker, event_type, date_time) values(? ,?, ?, ?, ?, ?);",
                 8L, "title_8", "place for jdbcTemplate", "Anatoly", "Lecture", LocalDateTime.now());
         Event eventFromDB = eventRepo.findById(8L).orElse(null);
@@ -46,7 +43,7 @@ public class EventRepoIntegrationTest {
     }
 
     @Test
-    public void getAllEventsTest() {
+    void getAllEventsTest() {
         jdbcTemplate.update("INSERT INTO event (id, title, place, speaker, event_type, date_time) values(? ,?, ?, ?, ?, ?);",
                 1L, "title_1", "place for jdbcTemplate", "Anatoly", "Lecture", LocalDateTime.now());
         jdbcTemplate.update("INSERT INTO event (id, title, place, speaker, event_type, date_time) values(? ,?, ?, ?, ?, ?);",
@@ -59,7 +56,7 @@ public class EventRepoIntegrationTest {
     }
 
     @Test
-    public void getAllEventsByTitleTest() {
+    void getAllEventsByTitleTest() {
         jdbcTemplate.update("INSERT INTO event (id, title, place, speaker, event_type, date_time) values(? ,?, ?, ?, ?, ?);",
                 1L, "title 11", "place for jdbcTemplate", "Anatoly", "Lecture", LocalDateTime.now());
         List<Event> foundEvent = eventRepo.getAllEventsByTitle("title 11");
@@ -67,7 +64,7 @@ public class EventRepoIntegrationTest {
     }
 
     @Test
-    public void createEventTest() {
+    void createEventTest() {
         eventRepo.save(event);
         Event eventFromDB = jdbcTemplate.queryForObject("SELECT * FROM event WHERE title = ?;",
                 new BeanPropertyRowMapper<>(Event.class), event.getTitle());
@@ -76,9 +73,10 @@ public class EventRepoIntegrationTest {
 
     @Test
     @Sql(scripts = {"classpath:initTest.sql"})
-    public void deleteEventTest() {
+    void deleteEventTest() {
         Event eventFromDBBeforeDeleting = jdbcTemplate.queryForObject("SELECT * FROM event WHERE title = ?;",
                 new BeanPropertyRowMapper<>(Event.class), "title 5");
+        assert eventFromDBBeforeDeleting != null : "Event didn't exist in DB before deleting";
         long deletingEventId = eventFromDBBeforeDeleting.getId();
 
         eventRepo.delete(eventFromDBBeforeDeleting);

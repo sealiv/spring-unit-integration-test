@@ -3,26 +3,27 @@ package org.aleks4ay.rest;
 import org.aleks4ay.RestApiApplication;
 import org.aleks4ay.dto.Event;
 import org.json.JSONException;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = RestApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = {"classpath:initTest.sql"})
 @DisplayName("Integration test for controller 'EventServiceController' with use @Sql script 'initTest.sql'")
-public class EventServiceControllerIntegrationTest {
+class EventServiceControllerIntegrationTest {
 
 	@Autowired
 	EventServiceController eventServiceController;
@@ -46,14 +47,14 @@ public class EventServiceControllerIntegrationTest {
 
 
 	@Test
-	public void getAllEventsTest() {
+	void getAllEventsTest() {
 		String response = restTemplate.getForObject(createURLWithPort("/events"), String.class);
 		assert(response != null);
 		assertTrue(response.contains("[{\"id\":1,\"title\":\"title 4\",\"place\":\"place test\",\"speaker\":\"Anatoly\""));
 	}
 
 	@Test
-	public void getEventTest() throws JSONException {
+	void getEventTest() throws JSONException {
 
 		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("/events/1"),
 				HttpMethod.GET, null, String.class);
@@ -65,7 +66,7 @@ public class EventServiceControllerIntegrationTest {
 	}
 
 	@Test
-	public void createEventTest() {
+	void createEventTest() {
 		event.setTitle("title_createEvent");
 
 		HttpEntity<Event> entity = new HttpEntity<>(event, null);
@@ -76,7 +77,7 @@ public class EventServiceControllerIntegrationTest {
 	}
 
 	@Test
-	public void updateEventTest() {
+	void updateEventTest() {
 		event.setTitle("title_updatedEvent");
 		event.setId(3);
 
@@ -88,7 +89,7 @@ public class EventServiceControllerIntegrationTest {
 	}
 
 	@Test
-	public void getAllEventsByTitleTest() throws JSONException {
+	void getAllEventsByTitleTest() throws JSONException {
 
 		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("/events/getByTitle?title=title 5"),
 				HttpMethod.GET, null, String.class);

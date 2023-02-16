@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @Sql(scripts = {"classpath:initTest.sql"})
 @DisplayName("Integration test for service 'EventService' with use @Sql script 'initTest.sql' before each method")
-public class EventServiceIntegrationTest {
+class EventServiceIntegrationTest {
 
     private Event event;
 
@@ -30,20 +30,21 @@ public class EventServiceIntegrationTest {
     }
 
     @Test
-    public void createEventTest() {
+    void createEventTest() {
         Event eventAfterSaving = eventService.createEvent(event);
-        assertTrue(eventAfterSaving.getId() == 4L);
+        assertEquals(4L, eventAfterSaving.getId());
     }
 
     @Test
-    public void deleteEventTest() {
-        Event findEvent = eventService.getEvent(2L);
+    void deleteEventTest() {
+        final long ID = 2L;
+        Event findEvent = eventService.getEvent(ID);
         eventService.deleteEvent(findEvent.getId());
-        assertThrows(RuntimeException.class, ()-> eventService.getEvent(findEvent.getId()));
+        assertThrows(RuntimeException.class, ()-> eventService.getEvent(2L));
     }
 
     @Test
-    public void updateEventTest() {
+    void updateEventTest() {
         event.setTitle("updated title");
         eventService.updateEvent(event);
         Event eventAfterSaving = eventService.getEvent(event.getId());
@@ -51,14 +52,14 @@ public class EventServiceIntegrationTest {
     }
 
     @Test
-    public void getEventTest() {
+    void getEventTest() {
         event.setId(1L);
         Event eventFromDB = eventService.getEvent(1L);
         assertEquals(event.toString(), eventFromDB.toString());
     }
 
     @Test
-    public void getAllEventTest() {
+    void getAllEventTest() {
         List<Event> eventsFromDB = eventService.getAllEvents();
 
         assertAll(()-> assertEquals(3, eventsFromDB.size()),
@@ -66,7 +67,7 @@ public class EventServiceIntegrationTest {
     }
 
     @Test
-    public void getAllEventsByTitleTest() {
+    void getAllEventsByTitleTest() {
         List<Event> eventsFromDB = eventService.getAllEventsByTitle("title 4");
         System.out.println(eventsFromDB);
         assertAll(()-> assertEquals(2, eventsFromDB.size()),
